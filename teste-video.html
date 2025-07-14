@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste de Vídeo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f0f0f0;
+        }
+        .video-container {
+            max-width: 600px;
+            margin: 20px auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        video {
+            width: 100%;
+            border-radius: 8px;
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .test-info {
+            background: #e8f5e8;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Teste de Vídeos - NewDay Brasil</h1>
+    
+    <div class="video-container">
+        <h2>Teste Basevip.mp4</h2>
+        <div class="test-info">
+            <strong>Arquivo:</strong> Basevip.mp4<br>
+            <strong>Tamanho:</strong> 157MB<br>
+            <strong>Status:</strong> <span id="status1">Carregando...</span>
+        </div>
+        <video id="video1" controls>
+            <source src="Basevip.mp4" type="video/mp4">
+            Seu navegador não suporta o elemento de vídeo.
+        </video>
+    </div>
+    
+    <div class="video-container">
+        <h2>Teste basevipgrande.mp4</h2>
+        <div class="test-info">
+            <strong>Arquivo:</strong> basevipgrande.mp4<br>
+            <strong>Tamanho:</strong> 158MB<br>
+            <strong>Status:</strong> <span id="status2">Carregando...</span>
+        </div>
+        <video id="video2" controls>
+            <source src="basevipgrande.mp4" type="video/mp4">
+            Seu navegador não suporta o elemento de vídeo.
+        </video>
+    </div>
+
+    <script>
+        // Teste do primeiro vídeo
+        const video1 = document.getElementById('video1');
+        const status1 = document.getElementById('status1');
+        
+        video1.addEventListener('loadstart', () => {
+            status1.textContent = 'Carregando...';
+            status1.style.color = 'orange';
+        });
+        
+        video1.addEventListener('canplay', () => {
+            status1.textContent = 'Funcionando ✓';
+            status1.style.color = 'green';
+        });
+        
+        video1.addEventListener('error', (e) => {
+            status1.textContent = 'Erro ao carregar ✗';
+            status1.style.color = 'red';
+            console.error('Erro no vídeo 1:', e);
+        });
+        
+        // Teste do segundo vídeo
+        const video2 = document.getElementById('video2');
+        const status2 = document.getElementById('status2');
+        
+        video2.addEventListener('loadstart', () => {
+            status2.textContent = 'Carregando...';
+            status2.style.color = 'orange';
+        });
+        
+        video2.addEventListener('canplay', () => {
+            status2.textContent = 'Funcionando ✓';
+            status2.style.color = 'green';
+        });
+        
+        video2.addEventListener('error', (e) => {
+            status2.textContent = 'Erro ao carregar ✗';
+            status2.style.color = 'red';
+            console.error('Erro no vídeo 2:', e);
+        });
+    </script>
+</body>
+</html> 

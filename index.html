@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NewDay Brasil - Loja de Itens</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <script src="https://sdk.mercadopago.com/js/v2"></script>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <h1 class="logo-dinamico">
+                    <span class="letra-verde">N</span>
+                    <span class="letra-amarela">e</span>
+                    <span class="letra-verde">w</span>
+                    <span class="letra-amarela">D</span>
+                    <span class="letra-verde">a</span>
+                    <span class="letra-amarela">y</span>
+                    <span class="letra-verde">B</span>
+                    <span class="letra-amarela">r</span>
+                    <span class="letra-verde">a</span>
+                    <span class="letra-amarela">s</span>
+                    <span class="letra-verde">i</span>
+                    <span class="letra-amarela">l</span>
+                </h1>
+            </div>
+            <div class="nav-links">
+                <a href="#home" class="nav-link categoria-nav">Início</a>
+                <div class="categorias-nav">
+                    <a href="#loja" class="nav-link categoria-nav" data-categoria="bases-vip">Bases VIP</a>
+                    <a href="#loja" class="nav-link categoria-nav" data-categoria="roupas-vip">Roupas VIP</a>
+                    <a href="#loja" class="nav-link categoria-nav" data-categoria="veiculos">Veículos</a>
+                    <a href="#loja" class="nav-link categoria-nav" data-categoria="construcao">Construção</a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Loja Section -->
+    <section id="loja" class="loja">
+        <div class="container">
+            <h2>Nossa Loja</h2>
+            
+            <!-- Aviso de instruções após a compra -->
+            <div class="aviso-compra" style="backdrop-filter: blur(8px); background: rgba(30,30,30,0.72); color: #fff; border: 2px solid #FFD700; border-radius: 14px; padding: 1.5rem 1.5rem 1.2rem 1.5rem; margin-bottom: 2.2rem; font-size: 1.18rem; box-shadow: 0 4px 24px 0 rgba(0,0,0,0.25), 0 0 12px #FFD700; font-weight: 600; text-shadow: 0 2px 12px #000, 0 1px 0 #FFD700; letter-spacing: 0.01em; position: relative; overflow: hidden;">
+                <span style="position:absolute;left:18px;top:18px;font-size:2.1rem;animation:pulseAviso 1.2s infinite alternate;"><i class="fas fa-exclamation-triangle" style="color:#FFD700;"></i></span>
+                <span style="margin-left:2.7rem;display:block;"><span style="color:#FFD700;font-weight:bold;">Atenção:</span> Após efetuar qualquer compra, abra um <span style="color:#4CAF50; font-weight:bold;">ticket</span> e passe as informações:</span>
+                <ul style="margin: 1.2rem 0 0 2.7rem; padding: 0; list-style: none;">
+                    <li style="margin-bottom: 0.7rem;"><span style="background:linear-gradient(90deg,#4CAF50,#388e3c); color:#fff; border-radius:50%; padding:0.35em 0.85em; font-weight:bold; margin-right:0.7em; font-size:1.1em; box-shadow:0 2px 8px #4CAF50; border:2px solid #fff;">1</span> <b style="color:#FFD700; text-shadow:0 2px 8px #000;">Produto adquirido</b></li>
+                    <li style="margin-bottom: 0.7rem;"><span style="background:linear-gradient(90deg,#FFD700,#FFA500); color:#333; border-radius:50%; padding:0.35em 0.85em; font-weight:bold; margin-right:0.7em; font-size:1.1em; box-shadow:0 2px 8px #FFD700; border:2px solid #fff;">2</span> <b style="color:#FFD700; text-shadow:0 2px 8px #000;">Comprovante de pagamento</b></li>
+                    <li><span style="background:linear-gradient(90deg,#2196F3,#1976D2); color:#fff; border-radius:50%; padding:0.35em 0.85em; font-weight:bold; margin-right:0.7em; font-size:1.1em; box-shadow:0 2px 8px #2196F3; border:2px solid #fff;">3</span> <b style="color:#FFD700; text-shadow:0 2px 8px #000;">Seu Nick no jogo</b> para que possamos entregar os seus itens.</li>
+                </ul>
+                <style>@keyframes pulseAviso{0%{transform:scale(1);}100%{transform:scale(1.18);}}</style>
+            </div>
+
+            <!-- Layout da Loja com Carrinho -->
+            <div class="loja-layout">
+                <!-- Grid de Produtos -->
+                <div class="produtos-container">
+                    <div class="produtos-grid" id="produtos-grid">
+                        <!-- Produtos serão carregados dinamicamente -->
+                    </div>
+                </div>
+                <!-- Carrinho de Compras -->
+                <div class="carrinho-fixo">
+                    <div class="carrinho-header">
+                        <h3><i class="fas fa-shopping-cart"></i> Carrinho</h3>
+                        <span class="cart-count">0</span>
+                    </div>
+                    <div class="carrinho-items" id="carrinho-items">
+                        <!-- Items do carrinho serão carregados dinamicamente -->
+                    </div>
+                    <div class="carrinho-footer">
+                        <div class="total">
+                            <span>Total:</span>
+                            <span id="carrinho-total">R$ 0,00</span>
+                        </div>
+                        <button class="btn-finalizar" id="btn-finalizar-compra">
+                            <i class="fas fa-credit-card"></i> Finalizar Compra
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal do Produto -->
+    <div id="produto-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="produto-detalhes">
+                <div class="produto-imagens">
+                    <div class="imagem-principal">
+                        <img id="imagem-principal" src="" alt="">
+                    </div>
+                    <div class="galeria-miniaturas" id="galeria-miniaturas">
+                        <!-- Miniaturas serão carregadas dinamicamente -->
+                    </div>
+                </div>
+                <div class="produto-info">
+                    <h2 id="produto-titulo"></h2>
+                    <p class="categoria" id="produto-categoria"></p>
+                    <p class="descricao" id="produto-descricao"></p>
+                    <div class="preco" id="produto-preco"></div>
+                    <div class="acoes">
+                        <button class="btn-adicionar" id="btn-adicionar-modal">
+                            <i class="fas fa-cart-plus"></i> Adicionar ao Carrinho
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Imagem Ampliada -->
+    <div id="imagem-modal" class="imagem-modal" style="display:none;">
+        <span class="imagem-modal-close">&times;</span>
+        <button class="imagem-modal-prev">&#10094;</button>
+        <img class="imagem-modal-conteudo" id="imagem-modal-conteudo" src="" alt="Imagem Ampliada">
+        <button class="imagem-modal-next">&#10095;</button>
+    </div>
+
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2024 NewDay Brasil. Todos os direitos reservados.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>
