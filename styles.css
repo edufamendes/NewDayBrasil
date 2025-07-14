@@ -792,40 +792,129 @@ body::before {
 }
 
 @media (max-width: 480px) {
+    .header {
+        padding: 0.5rem 0;
+    }
     .nav {
         flex-direction: column;
+        gap: 0.5rem;
+        padding: 0 8px;
+    }
+    .logo h1, .logo-dinamico {
+        font-size: 1.1rem;
+        gap: 2px;
+    }
+    .footer {
+        padding: 1rem 0;
+        font-size: 0.95rem;
+    }
+    .container {
+        padding: 0 6px;
+    }
+    .loja h2 {
+        font-size: 1.3rem;
+        margin-bottom: 1.2rem;
+    }
+    .loja-layout {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+    .carrinho-fixo {
+        width: 100%;
+        max-width: 100vw;
+        border-radius: 10px;
+        margin-top: 1rem;
+        position: static;
+        top: unset;
+        left: unset;
+        right: unset;
+        max-height: none;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+    }
+    .produtos-grid {
+        grid-template-columns: 1fr;
         gap: 1rem;
     }
-    
-    .hero-content h1 {
-        font-size: 2rem;
+    .produto-card {
+        border-radius: 10px;
+        min-width: 0;
     }
-    
-    .hero-titulo-dinamico {
-        gap: 4px;
+    .produto-imagem {
+        height: 140px;
     }
-    
-    .linha-bem-vindo,
-    .linha-newday-brasil {
-        gap: 2px;
+    .produto-info {
+        padding: 1rem;
     }
-    
-    .hero-subtitulo-dinamico {
+    .btn-adicionar, .btn-info, .btn-finalizar {
         font-size: 1rem;
-        gap: 8px;
+        padding: 10px;
     }
-    
-    .palavra-de,
-    .palavra-player,
-    .palavra-para {
-        gap: 2px;
-    }
-    
     .modal-content {
-        width: 95%;
-        margin: 10% auto;
+        width: 99vw;
+        max-width: 99vw;
+        margin: 2vw auto;
+        padding: 0.5rem 0.2rem;
     }
-} 
+    .produto-detalhes {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+    }
+    .imagem-principal img {
+        height: 180px;
+    }
+    .galeria-miniaturas {
+        gap: 0.2rem;
+    }
+    .miniatura {
+        width: 48px;
+        height: 36px;
+    }
+    .carrinho-header h3 {
+        font-size: 1rem;
+    }
+    .cart-count {
+        width: 20px;
+        height: 20px;
+        font-size: 0.8rem;
+    }
+    .carrinho-item img {
+        width: 36px;
+        height: 36px;
+    }
+    .carrinho-item-titulo {
+        font-size: 0.8rem;
+    }
+    .carrinho-item-preco {
+        font-size: 0.8rem;
+    }
+    .quantidade-btn {
+        width: 20px;
+        height: 20px;
+        font-size: 0.7rem;
+    }
+    .remover-item {
+        font-size: 0.65rem;
+        padding: 2px 6px;
+    }
+    .btn-finalizar {
+        font-size: 1rem;
+        padding: 10px;
+    }
+    .imagem-modal-conteudo {
+        max-width: 98vw;
+        max-height: 70vh;
+    }
+    .imagem-modal-prev, .imagem-modal-next {
+        font-size: 1.3rem;
+        padding: 4px 8px;
+    }
+    .imagem-modal-close {
+        font-size: 2rem;
+        top: 10px;
+        right: 16px;
+    }
+}
 
 /* Modal de Imagem Ampliada */
 .imagem-modal {
