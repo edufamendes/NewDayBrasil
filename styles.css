@@ -925,3 +925,47 @@ body::before {
         gap: 1rem;
     }
 } 
+
+/* Nome dinâmico NewDay Brasil */
+.nome-animado {
+    display: flex;
+    align-items: center;
+    gap: 2px;
+}
+.letra-animada {
+    display: inline-block;
+    font-size: 2.1rem;
+    font-weight: bold;
+    background: linear-gradient(90deg, #4CAF50, #FFD700, #2196F3, #4CAF50);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    text-fill-color: transparent;
+    animation: gradiente-letra 2.5s ease-in-out infinite, brilho-letra 2.5s infinite alternate;
+    filter: drop-shadow(0 2px 8px #000) drop-shadow(0 0 6px #FFD700);
+    margin-right: 1px;
+}
+.letra-animada:nth-child(even) {
+    animation: gradiente-letra 2.5s ease-in-out infinite, brilho-letra 2.5s infinite alternate, rotaciona-letra 2.2s infinite alternate;
+}
+.letra-animada:nth-child(odd) {
+    animation: gradiente-letra 2.5s ease-in-out infinite, brilho-letra 2.5s infinite alternate, rotaciona-letra-inv 2.2s infinite alternate;
+}
+@keyframes gradiente-letra {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+@keyframes brilho-letra {
+    0% { filter: drop-shadow(0 2px 8px #000) drop-shadow(0 0 6px #FFD700); }
+    100% { filter: drop-shadow(0 4px 16px #FFD700) drop-shadow(0 0 16px #4CAF50); }
+}
+@keyframes rotaciona-letra {
+    0% { transform: rotate(-4deg); }
+    100% { transform: rotate(6deg); }
+}
+@keyframes rotaciona-letra-inv {
+    0% { transform: rotate(4deg); }
+    100% { transform: rotate(-6deg); }
+} 

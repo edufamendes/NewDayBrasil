@@ -199,6 +199,9 @@ const cartCount = document.querySelector('.cart-count');
 const produtoModal = document.getElementById('produto-modal');
 const btnFinalizarCompra = document.getElementById('btn-finalizar-compra');
 
+// URL do webhook do Discord
+const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1394224368925544488/gsb0kycXUQq4lcVAkYNn1roszQl4mrSwCvConHV4jpf3mHfjn0jYjEnBMhkPxpwOmkb8';
+
 // Inicialização
 document.addEventListener('DOMContentLoaded', function() {
     // Marcar a primeira categoria como ativa
@@ -461,6 +464,24 @@ async function finalizarCompra() {
         return;
     }
     
+    // Enviar notificação para o Discord
+    try {
+        const produtosTexto = carrinho.map(item => `• ${item.nome} (x${item.quantidade}) - R$ ${item.preco.toFixed(2)}`).join('\n');
+        const total = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
+        const data = new Date();
+        const horario = data.toLocaleString('pt-BR');
+        const mensagem = {
+            content: `🛒 **Nova compra no site!**\n\n${produtosTexto}\n\n**Total:** R$ ${total.toFixed(2)}\n**Data/Hora:** ${horario}`
+        };
+        fetch(DISCORD_WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(mensagem)
+        });
+    } catch (e) {
+        console.warn('Não foi possível notificar o Discord:', e);
+    }
+
     try {
         // Criar preferência no Mercado Pago usando a API do Mercado Pago
         const preference = {
