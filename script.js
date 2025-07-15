@@ -213,6 +213,9 @@ document.addEventListener('DOMContentLoaded', function() {
     carregarProdutos();
     inicializarEventos();
     atualizarCarrinho();
+    
+    // Verificar status do pagamento ao carregar a página
+    verificarStatusPagamento();
 });
 
 // Carregar produtos
@@ -463,24 +466,6 @@ async function finalizarCompra() {
         alert('Carrinho vazio!');
         return;
     }
-    
-    // Enviar notificação para o Discord
-    try {
-        const produtosTexto = carrinho.map(item => `• ${item.nome} (x${item.quantidade}) - R$ ${item.preco.toFixed(2)}`).join('\n');
-        const total = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
-        const data = new Date();
-        const horario = data.toLocaleString('pt-BR');
-        const mensagem = {
-            content: `🛒 **Nova compra no site!**\n\n${produtosTexto}\n\n**Total:** R$ ${total.toFixed(2)}\n**Data/Hora:** ${horario}`
-        };
-        fetch(DISCORD_WEBHOOK_URL, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(mensagem)
-        });
-    } catch (e) {
-        console.warn('Não foi possível notificar o Discord:', e);
-    }
 
     try {
         // Criar preferência no Mercado Pago usando a API do Mercado Pago
@@ -492,12 +477,13 @@ async function finalizarCompra() {
                 picture_url: item.imagem
             })),
             back_urls: {
-                success: window.location.href,
-                failure: window.location.href,
-                pending: window.location.href
+                success: window.location.href + '?status=success&payment_id={payment_id}',
+                failure: window.location.href + '?status=failure',
+                pending: window.location.href + '?status=pending'
             },
             auto_return: "approved",
-            external_reference: "site-dayz-" + Date.now()
+            external_reference: "site-dayz-" + Date.now(),
+            notification_url: window.location.origin + '/webhook-mercadopago.php' // URL do webhook PHP
         };
         
         // Criar preferência usando a API do Mercado Pago
@@ -534,12 +520,13 @@ async function finalizarCompra() {
                     picture_url: item.imagem
                 })),
                 back_urls: {
-                    success: window.location.href,
-                    failure: window.location.href,
-                    pending: window.location.href
+                    success: window.location.href + '?status=success&payment_id={payment_id}',
+                    failure: window.location.href + '?status=failure',
+                    pending: window.location.href + '?status=pending'
                 },
                 auto_return: "approved",
-                external_reference: "site-dayz-" + Date.now()
+                external_reference: "site-dayz-" + Date.now(),
+                notification_url: window.location.origin + '/api/mercadopago/webhook'
             };
             
             mp.preferences.create(preference).then(function(response) {
@@ -601,3 +588,78 @@ style.textContent = `
     }
 `;
 document.head.appendChild(style); 
+
+// Função para verificar o status do pagamento
+async function verificarStatusPagamento() {
+    const urlParams = new URLSearchParams(window.location.search);
+    const status = urlParams.get('status');
+    const paymentId = urlParams.get('payment_id');
+    
+    if (status === 'success' && paymentId) {
+        try {
+            // Verificar o status do pagamento no Mercado Pago
+            const response = await fetch(`https://api.mercadopago.com/v1/payments/${paymentId}`, {
+                method: 'GET',
+                headers: {
+                    'Authorization': `Bearer ${MERCADO_PAGO_ACCESS_TOKEN}`
+                }
+            });
+            
+            if (response.ok) {
+                const payment = await response.json();
+                
+                if (payment.status === 'approved') {
+                    // Pagamento aprovado - enviar notificação para o Discord
+                    enviarNotificacaoDiscord(payment);
+                    
+                    // Mostrar mensagem de sucesso
+                    mostrarNotificacao('✅ Pagamento aprovado! Sua compra foi processada com sucesso.');
+                    
+                    // Limpar carrinho
+                    carrinho = [];
+                    atualizarCarrinho();
+                    
+                    // Limpar parâmetros da URL
+                    window.history.replaceState({}, document.title, window.location.pathname);
+                } else if (payment.status === 'pending') {
+                    mostrarNotificacao('⏳ Pagamento pendente. Aguarde a confirmação.');
+                } else {
+                    mostrarNotificacao('❌ Pagamento não foi aprovado. Tente novamente.');
+                }
+            }
+        } catch (error) {
+            console.error('Erro ao verificar pagamento:', error);
+            mostrarNotificacao('❌ Erro ao verificar status do pagamento.');
+        }
+    } else if (status === 'failure') {
+        mostrarNotificacao('❌ Pagamento recusado. Tente novamente.');
+        window.history.replaceState({}, document.title, window.location.pathname);
+    } else if (status === 'pending') {
+        mostrarNotificacao('⏳ Pagamento pendente. Aguarde a confirmação.');
+        window.history.replaceState({}, document.title, window.location.pathname);
+    }
+}
+
+// Função para enviar notificação do Discord apenas para pagamentos aprovados
+async function enviarNotificacaoDiscord(payment) {
+    try {
+        const produtosTexto = carrinho.map(item => `• ${item.nome} (x${item.quantidade}) - R$ ${item.preco.toFixed(2)}`).join('\n');
+        const total = carrinho.reduce((sum, item) => sum + (item.preco * item.quantidade), 0);
+        const data = new Date();
+        const horario = data.toLocaleString('pt-BR');
+        
+        const mensagem = {
+            content: `✅ **Pagamento Aprovado!**\n\n${produtosTexto}\n\n**Total:** R$ ${total.toFixed(2)}\n**ID do Pagamento:** ${payment.id}\n**Data/Hora:** ${horario}\n**Status:** ${payment.status}`
+        };
+        
+        await fetch(DISCORD_WEBHOOK_URL, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify(mensagem)
+        });
+        
+        console.log('Notificação enviada para o Discord com sucesso');
+    } catch (e) {
+        console.warn('Não foi possível notificar o Discord:', e);
+    }
+} 
