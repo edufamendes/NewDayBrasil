@@ -615,6 +615,10 @@ async function verificarStatusPagamento() {
                     // Mostrar mensagem de sucesso
                     mostrarNotificacao('✅ Pagamento aprovado! Sua compra foi processada com sucesso.');
                     
+                    // Exibir modal de aviso
+                    var modalAviso = document.getElementById('modal-aviso');
+                    if (modalAviso) { modalAviso.style.display = 'flex'; }
+                    
                     // Limpar carrinho
                     carrinho = [];
                     atualizarCarrinho();

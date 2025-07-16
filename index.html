@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <script src="https://sdk.mercadopago.com/js/v2"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;900&display=swap" rel="stylesheet">
 </head>
 <body>
     <!-- Header -->
@@ -47,20 +48,28 @@
     <!-- Loja Section -->
     <section id="loja" class="loja">
         <div class="container">
-            <h2>Nossa Loja</h2>
+            <h2 style="
+  font-family: 'Lucida Sans', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans Regular', Arial, sans-serif;
+  font-size: 2.4rem;
+  text-align: center;
+  margin-top: 1.2rem;
+  margin-bottom: 1.2rem;
+  background: none;
+  color: transparent;
+  text-shadow: 0 2px 12px #000, 0 1px 0 #FFD700;
+  border-radius: 12px;
+  padding: 0.6em 0;
+  font-weight: 900;
+  letter-spacing: 0.04em;
+  background-image: linear-gradient(90deg, #00C853, #FFD600);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: brilhoTitulo 2.5s linear infinite alternate;
+">
+  Loja NewDay Brasil
+</h2>
             
-            <!-- Aviso de instruções após a compra -->
-            <div class="aviso-compra" style="backdrop-filter: blur(8px); background: rgba(30,30,30,0.72); color: #fff; border: 2px solid #FFD700; border-radius: 14px; padding: 1.5rem 1.5rem 1.2rem 1.5rem; margin-bottom: 2.2rem; font-size: 1.18rem; box-shadow: 0 4px 24px 0 rgba(0,0,0,0.25), 0 0 12px #FFD700; font-weight: 600; text-shadow: 0 2px 12px #000, 0 1px 0 #FFD700; letter-spacing: 0.01em; position: relative; overflow: hidden;">
-                <span style="position:absolute;left:18px;top:18px;font-size:2.1rem;animation:pulseAviso 1.2s infinite alternate;"><i class="fas fa-exclamation-triangle" style="color:#FFD700;"></i></span>
-                <span style="margin-left:2.7rem;display:block;"><span style="color:#FFD700;font-weight:bold;">Atenção:</span> Após efetuar qualquer compra, abra um <span style="color:#4CAF50; font-weight:bold;">ticket</span> e passe as informações:</span>
-                <ul style="margin: 1.2rem 0 0 2.7rem; padding: 0; list-style: none;">
-                    <li style="margin-bottom: 0.7rem;"><span style="background:linear-gradient(90deg,#4CAF50,#388e3c); color:#fff; border-radius:50%; padding:0.35em 0.85em; font-weight:bold; margin-right:0.7em; font-size:1.1em; box-shadow:0 2px 8px #4CAF50; border:2px solid #fff;">1</span> <b style="color:#FFD700; text-shadow:0 2px 8px #000;">Produto adquirido</b></li>
-                    <li style="margin-bottom: 0.7rem;"><span style="background:linear-gradient(90deg,#FFD700,#FFA500); color:#333; border-radius:50%; padding:0.35em 0.85em; font-weight:bold; margin-right:0.7em; font-size:1.1em; box-shadow:0 2px 8px #FFD700; border:2px solid #fff;">2</span> <b style="color:#FFD700; text-shadow:0 2px 8px #000;">Comprovante de pagamento</b></li>
-                    <li><span style="background:linear-gradient(90deg,#2196F3,#1976D2); color:#fff; border-radius:50%; padding:0.35em 0.85em; font-weight:bold; margin-right:0.7em; font-size:1.1em; box-shadow:0 2px 8px #2196F3; border:2px solid #fff;">3</span> <b style="color:#FFD700; text-shadow:0 2px 8px #000;">Seu Nick no jogo</b> para que possamos entregar os seus itens.</li>
-                </ul>
-                <style>@keyframes pulseAviso{0%{transform:scale(1);}100%{transform:scale(1.18);}}</style>
-            </div>
-
             <!-- Layout da Loja com Carrinho -->
             <div class="loja-layout">
                 <!-- Grid de Produtos -->
@@ -128,6 +137,26 @@
         <button class="imagem-modal-next">&#10095;</button>
     </div>
 
+    <!-- Adicionar modal de aviso no final do body -->
+    <div id="modal-aviso" style="display:none; position:fixed; top:0; left:0; width:100vw; height:100vh; background:rgba(0,0,0,0.82); z-index:9999; align-items:center; justify-content:center;">
+      <div style="background: linear-gradient(135deg, #232526 0%, #414345 100%); color:#FFD700; border-radius:22px; padding:2.5rem 2rem 2rem 2rem; max-width:95vw; box-shadow:0 8px 32px #000; border: 2px solid #FFD700; position:relative; text-align:center;">
+        <div style="font-size:3.2rem; margin-bottom:0.7rem; animation:pulseAviso 1.2s infinite alternate;">
+          <i class="fas fa-exclamation-triangle" style="color:#FFD700;"></i>
+        </div>
+        <h2 style="color:#FFD700; text-align:center; font-size:2.1rem; margin-bottom:0.5rem; letter-spacing:0.04em; text-shadow:0 2px 12px #000, 0 1px 0 #FFD700;">Atenção!</h2>
+        <p style="color:#fff; font-size:1.18rem; text-align:center; margin-bottom:1.2rem; line-height:1.6;">
+          <span style="background: linear-gradient(90deg, #FFD700, #4CAF50); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; font-weight:bold;">Após finalizar sua compra</span>, abra um <b style="color:#4CAF50;">ticket</b> no Discord e envie:<br><br>
+          <span style="display:inline-block; margin:0.3em 0; background:rgba(255,255,255,0.07); border-radius:8px; padding:0.3em 1em; font-weight:bold; color:#FFD700;">Produto adquirido</span><br>
+          <span style="display:inline-block; margin:0.3em 0; background:rgba(255,255,255,0.07); border-radius:8px; padding:0.3em 1em; font-weight:bold; color:#FFD700;">Comprovante de pagamento</span><br>
+          <span style="display:inline-block; margin:0.3em 0; background:rgba(255,255,255,0.07); border-radius:8px; padding:0.3em 1em; font-weight:bold; color:#FFD700;">Seu nick no jogo</span><br><br>
+          <span style="color:#FFD700; font-weight:bold;">Assim garantimos a entrega rápida dos seus itens!</span>
+        </p>
+        <a href="https://discord.gg/JY54bPQ7Xr" target="_blank" style="display:inline-block; background:linear-gradient(90deg,#4CAF50,#FFD700); color:#232526; font-weight:bold; font-size:1.15em; border:none; border-radius:10px; padding:0.7em 2.2em; margin-bottom:1.1em; margin-top:0.2em; text-decoration:none; box-shadow:0 2px 12px #FFD700; transition:background 0.2s, color 0.2s;">Abrir Discord</a><br>
+        <button onclick="document.getElementById('modal-aviso').style.display='none'" style="margin:0 auto; display:block; background:#FFD700; color:#232526; border:none; border-radius:8px; padding:0.7em 2.2em; font-weight:bold; font-size:1.1em; cursor:pointer; box-shadow:0 2px 8px #FFD700; transition:background 0.2s, color 0.2s;">OK, Entendi</button>
+        <style>@keyframes pulseAviso{0%{transform:scale(1);}100%{transform:scale(1.13);}}</style>
+      </div>
+    </div>
+
 
     <!-- Footer -->
     <footer class="footer">
@@ -140,5 +169,11 @@
     </footer>
 
     <script src="script.js"></script>
+    <style>
+@keyframes brilhoTitulo {
+  0% { background-position: 0% 50%; }
+  100% { background-position: 100% 50%; }
+}
+</style>
 </body>
 </html>

@@ -27,12 +27,18 @@ if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
 
 // Obter dados do webhook
 $input = file_get_contents('php://input');
-logMessage("Dados recebidos: " . $input);
+logMessage("Dados recebidos: " . var_export($input, true));
+
+if (empty($input)) {
+    logMessage("ERRO: Corpo da requisição vazio. Nenhum dado recebido.");
+    http_response_code(400);
+    exit('Corpo da requisição vazio');
+}
 
 $data = json_decode($input, true);
 
 if (json_last_error() !== JSON_ERROR_NONE) {
-    logMessage("ERRO: JSON inválido - " . json_last_error_msg());
+    logMessage("ERRO: JSON inválido - " . json_last_error_msg() . " | Conteúdo recebido: " . var_export($input, true));
     http_response_code(400);
     exit('JSON inválido');
 }
