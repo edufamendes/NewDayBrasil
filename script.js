@@ -526,7 +526,7 @@ async function finalizarCompra() {
                 },
                 auto_return: "approved",
                 external_reference: "site-dayz-" + Date.now(),
-                notification_url: window.location.origin + '/api/mercadopago/webhook'
+                notification_url: window.location.origin + '/webhook-mercadopago.php'
             };
             
             mp.preferences.create(preference).then(function(response) {
