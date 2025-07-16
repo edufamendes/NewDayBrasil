@@ -157,4 +157,4 @@ if (isset($data['type']) && $data['type'] === 'payment') {
 logMessage("=== WEBHOOK FINALIZADO ===");
 http_response_code(200);
 echo 'OK';
-?> 
+?>
