@@ -26,11 +26,12 @@ const produtos = [
         categoria: "roupas-vip",
         categoriaNome: "Roupas VIP",
         preco: 15.00,
-        descricao: "Roupa militar VIP com design exclusivo. Oferece proteção adicional e visual único no servidor.",
-        imagem: "roupavip.png",
+        descricao: "Roupa vip voce nasce com a roupa,nela tbm vem inclusa 1 garrafa de agua,2 latas de bacon,1 bandagem,e uma faca de combate.(o pagamento da roupa é mensal,ou seja,valido por 1 mes apenas)",
+        imagem: "vip1.png",
         galeria: [
-            "roupavip.png",
-            "vipslots.png"
+            "vip1.png",
+            "vip2.png",
+            "vip3.png"
         ],
         videos: []
     },
@@ -151,20 +152,6 @@ const produtos = [
         imagem: "pedradeamolar.jpg",
         galeria: [
             "pedradeamolar.jpg"
-        ],
-        videos: []
-    },
-    {
-        id: 13,
-        nome: "Ferramentas Básicas",
-        categoria: "construcao",
-        categoriaNome: "Construção",
-        preco: 10,
-        descricao: "Kit completo de ferramentas básicas para construção. Inclui martelo,chave de fenda,Machado grande e machado pequeno.",
-        imagem: "https://via.placeholder.com/400x300/8D6E63/white?text=Ferramentas+Básicas",
-        galeria: [
-            "https://via.placeholder.com/400x300/8D6E63/white?text=Ferramentas+1",
-            "https://via.placeholder.com/400x300/6D4C41/white?text=Ferramentas+2"
         ],
         videos: []
     },
